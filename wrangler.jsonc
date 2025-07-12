@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "raktasetu",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-07-11",
+  // "compatibility_flags": [
+  //   "nodejs_compat"
+  // ],
+  // "vars": {
+  //   "MY_VAR": "my-variable"
+  // },
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "MY_KV_NAMESPACE",
+  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  //   }
+  // ],
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MY_BUCKET",
+  //     "bucket_name": "my-bucket"
+  //   }
+  // ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blood-benk",
+      "database_id": "21e596e9-c463-4db7-a63f-21e18092934c"
+    }
+  ],
+  // "ai": {
+  //   "binding": "AI"
+  // },
+  // "observability": {
+  //   "enabled": true,
+  //   "head_sampling_rate": 1
+  // }
+}

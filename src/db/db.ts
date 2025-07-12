@@ -111,6 +111,7 @@ export async function initDb(db: D1Database) {
     }
   }
 
+  const donorInsertions: string[] = [];
   // Insert donors
   for (const item of data) {
     const {
@@ -125,25 +126,23 @@ export async function initDb(db: D1Database) {
       village_municipality_corporation,
       contact_number,
     } = item as DataType;
-
-    await db
-      .prepare(
-        `INSERT INTO donors (email, name, batch, date_of_birth, weight, blood_group, district, taluk, village_municipality_corporation, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-      )
-      .bind(
-        email_address?.email || "",
-        name || "",
-        batch || "",
-        date_of_birth || "",
-        weight || 0,
-        blood_group || "",
-        district?.trim() || "",
-        taluk?.trim() || "",
-        village_municipality_corporation || "",
-        contact_number?.toString() || ""
-      )
-      .run();
+    donorInsertions.push(
+      `('${email_address?.email || ""}', '${name || ""}', '${batch || ""}', '${
+        date_of_birth || ""
+      }', ${weight || 0}, '${blood_group || ""}', '${
+        district?.trim() || ""
+      }', '${taluk?.trim() || ""}', '${
+        village_municipality_corporation || ""
+      }', '${contact_number?.toString() || ""}')`
+    );
   }
+
+  await db
+    .prepare(
+      `INSERT INTO donors (email, name, batch, date_of_birth, weight, blood_group, district, taluk, village_municipality_corporation, contact_number) 
+        VALUES ${donorInsertions.join(", ")}`
+    )
+    .run();
 
   console.log("Database initialized with districts, taluks, and donors.");
   return new Response(
